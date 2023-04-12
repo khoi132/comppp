@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   web:
     build: .
@@ -12,21 +13,23 @@ services:
       - my-network
     depends_on:
       - db
+
   db:
-     image: mysql:latest
+    image: mysql:latest
     container_name: my-db
     restart: always
-    volumes:
-      - ./data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: cc_computing
       MYSQL_USER: khoitv
       MYSQL_PASSWORD: khoitv@123
       MYSQL_ROOT_PASSWORD: 123@123Aa
-       networks:
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
       - my-network
+
   phpmyadmin:
-  image: phpmyadmin/phpmyadmin:latest
+    image: phpmyadmin/phpmyadmin:latest
     container_name: my-dbadmin
     environment:
       PMA_HOST: db
@@ -40,4 +43,5 @@ services:
     depends_on:
       - db
 
-  
+networks:
+  my-network:
